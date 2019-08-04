@@ -1,0 +1,18 @@
+
+.Repositories {
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+.RepositoriesList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.RepositoriesItem {
+  background-color: #282c34;
+  border-radius: 4px;
+  color: #ffffff;
+  margin: 0.5rem;
+  padding: 1rem;
+}

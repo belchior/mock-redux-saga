@@ -1,9 +1,4 @@
-This project is prove of concept to simplify the way to do unit test for redux saga
-
-
-Testing a saga:
-```js
-import { runSaga, withBackendSuccess } from './sagaUtils';
+import { runSaga, withBackendError, withBackendSuccess } from './sagaUtils';
 import { fetchReposAsync } from './repositories';
 import { fetchRepos as fetchReposApi } from '../apis/repositories';
 import {
@@ -11,6 +6,7 @@ import {
   FETCH_REPOS_FINISHED,
   fetchRepos as fetchReposAction,
   setRepos,
+  responseError,
 } from '../redux/actions';
 
 
@@ -20,7 +16,6 @@ it('should run the repositories saga with success response', async () => {
   const data = [
     { id: 1, name: 'mock-redux-saga', html_url: '/' },
   ];
-  
   fetchReposApi.mockImplementationOnce(withBackendSuccess(data));
   const sagaHistory = await runSaga(
     fetchReposAsync(fetchReposAction('belchior')),
@@ -31,21 +26,14 @@ it('should run the repositories saga with success response', async () => {
   expect(sagaHistory.hasAction(setRepos(data))).toBeTruthy();
   expect(sagaHistory.hasActionType(FETCH_REPOS_FINISHED)).toBeTruthy();
 });
-```
 
-## Available Scripts
+it('should run the repositories saga with error response', async () => {
+  const errorMessage = 'backend error';
+  fetchReposApi.mockImplementationOnce(withBackendError(errorMessage));
+  const sagaHistory = await runSaga(
+    fetchReposAsync(fetchReposAction('belchior')),
+  );
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  expect(sagaHistory.hasActionType(FETCH_REPOS_STARTED)).toBeTruthy();
+  expect(sagaHistory.hasAction(responseError(errorMessage))).toBeTruthy();
+});
