@@ -1,4 +1,4 @@
-This project is prove of concept to simplify the way to do unit test for redux saga
+This project is a prove of concept to simplify the way to do unit test for redux saga
 
 
 Testing a saga:
