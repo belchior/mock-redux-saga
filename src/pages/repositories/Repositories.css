@@ -4,6 +4,17 @@
   padding: 1rem;
 }
 
+.Repositories .Title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Repositories .Spinner {
+  width: 50px;
+  height: 50px;
+}
+
 .RepositoriesList {
   display: flex;
   flex-wrap: wrap;

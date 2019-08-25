@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 
+jest.mock('pages/repositories/Repositories', () => (
+  function Repositories() { return 'RepositoriesMocked'; }
+));
+
+
 const setup = () => {
   const props = {
-    repos: {
-      isLoading: false,
-      list: [],
-    },
-    fetchRepos: () => {},
   };
   return (
     <App {...props} />
