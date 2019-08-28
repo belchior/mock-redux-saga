@@ -1,27 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
-import { fetchRepos } from './actions';
+import { useFetchRepos } from './hooks';
 import logo from 'logo.svg';
 import './Repositories.css';
 
-const useFetchRepos = userName => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchRepos(userName));
-  }, [userName, dispatch]);
-
-  return useSelector(
-    rootState => ({
-      isLoading: rootState.repositories.isLoading,
-      list: rootState.repositories.list
-    }),
-    (currentRepos, prevRepos) => (
-      currentRepos.isLoading === prevRepos.isLoading &&
-      currentRepos.list.length === prevRepos.list.length
-    )
-  );
-};
 
 export function Repositories(props) {
   const { userName } = props;

@@ -14,10 +14,11 @@ export function* fetchReposAsync(action) {
     }));
     yield put(fetchReposFinished(custommRepos));
   } catch (error) {
+    yield put(fetchReposFinished());
     yield put(responseError(error.message));
   }
 }
 
-export function* mainSaga() {
+export function* repositories() {
   yield takeLatest(FETCH_REPOS_STARTED, fetchReposAsync);
 }
